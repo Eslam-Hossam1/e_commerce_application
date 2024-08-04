@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/helper/add_space.dart';
+import 'package:e_commerce_app/view/add_category_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,11 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return AddCategoryView();
+          }));
+        },
         child: Icon(Icons.add),
       ),
       appBar: AppBar(
