@@ -77,21 +77,71 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisSpacing: 5),
               itemCount: categoriesDocsList.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  color: Colors.white,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          "assets/my-image2.png",
-                          height: 150,
-                        ),
-                        Text(
-                          "${categoriesDocsList[index]["categoryName"]}",
-                          style: TextStyle(fontSize: 18),
-                        )
-                      ],
+                return InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(
+                          child: Container(
+                              width: 300,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.grey.shade900,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("cancel")),
+                                      addWidthSpace(32),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            FirebaseFirestore.instance
+                                                .collection("categories")
+                                                .doc(categoriesDocsList[index]
+                                                    .id)
+                                                .delete()
+                                                .then((e) {
+                                              Navigator.pushReplacement(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return HomeView();
+                                              }));
+                                            });
+                                          },
+                                          child: Text("delete"))
+                                    ],
+                                  )
+                                ],
+                              )),
+                        );
+                      },
+                    );
+                  },
+                  child: Card(
+                    elevation: 4,
+                    color: Colors.white,
+                    child: Container(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            "assets/my-image2.png",
+                            height: 150,
+                          ),
+                          Text(
+                            "${categoriesDocsList[index]["categoryName"]}",
+                            style: TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
