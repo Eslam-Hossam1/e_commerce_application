@@ -3,6 +3,7 @@ import 'package:e_commerce_app/helper/add_space.dart';
 import 'package:e_commerce_app/view/add_category_view.dart';
 import 'package:e_commerce_app/view/edit_category_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
+import 'package:e_commerce_app/view/notes_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
               itemCount: categoriesDocsList.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () {
+                  onLongPress: () {
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -147,6 +148,13 @@ class _HomeViewState extends State<HomeView> {
                         );
                       },
                     );
+                  },
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return NotesView(
+                          categroyDocId: categoriesDocsList[index].id);
+                    }));
                   },
                   child: Card(
                     elevation: 4,

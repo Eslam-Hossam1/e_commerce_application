@@ -29,7 +29,9 @@ class _EditCategoryFormState extends State<EditCategoryForm> {
       setState(() {
         isLoading = true;
       });
-
+      // await categoriesCollection
+      //     .doc(widget.docId)
+      //     .set({"categoryName": categoryName},SetOptions(merge: true));
       await categoriesCollection
           .doc(widget.docId)
           .update({'categoryName': categoryName});
