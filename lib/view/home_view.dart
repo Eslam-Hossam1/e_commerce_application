@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/helper/add_space.dart';
 import 'package:e_commerce_app/view/add_category_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
@@ -5,8 +6,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  List<QueryDocumentSnapshot> categoriesDocsList = [];
+  Future<void> getData() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await FirebaseFirestore.instance.collection("categories").get();
+    categoriesDocsList.addAll(querySnapshot.docs);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData().then((e) {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +67,7 @@ class HomeView extends StatelessWidget {
             mainAxisExtent: 220,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5),
+        itemCount: categoriesDocsList.length,
         itemBuilder: (context, index) {
           return Card(
             elevation: 4,
@@ -58,7 +80,7 @@ class HomeView extends StatelessWidget {
                     height: 150,
                   ),
                   Text(
-                    "category",
+                    "${categoriesDocsList[index]["categoryName"]}",
                     style: TextStyle(fontSize: 18),
                   )
                 ],
