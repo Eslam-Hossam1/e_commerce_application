@@ -15,6 +15,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<QueryDocumentSnapshot> categoriesDocsList = [];
+  late bool isLoading;
   Future<void> getData() async {
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await FirebaseFirestore.instance.collection("categories").get();
@@ -24,8 +25,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
+    isLoading = true;
     getData().then((e) {
-      setState(() {});
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -59,36 +63,40 @@ class _HomeViewState extends State<HomeView> {
               icon: Icon(Icons.exit_to_app))
         ],
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        physics: BouncingScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 220,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5),
-        itemCount: categoriesDocsList.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4,
-            color: Colors.white,
-            child: Container(
-              child: Column(
-                children: [
-                  Image.asset(
-                    "assets/my-image2.png",
-                    height: 150,
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : GridView.builder(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              physics: BouncingScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisExtent: 220,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5),
+              itemCount: categoriesDocsList.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  color: Colors.white,
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          "assets/my-image2.png",
+                          height: 150,
+                        ),
+                        Text(
+                          "${categoriesDocsList[index]["categoryName"]}",
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    "${categoriesDocsList[index]["categoryName"]}",
-                    style: TextStyle(fontSize: 18),
-                  )
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
