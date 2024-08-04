@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/widgets/custome_elevated_button.dart';
 import 'package:e_commerce_app/widgets/custome_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddCategoryForm extends StatefulWidget {
@@ -21,9 +22,11 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
       FirebaseFirestore.instance.collection("categories");
   Future<void> addCategory(String categoryName) async {
     try {
-      DocumentReference response =
-          await categoriesCollection.add({'categoryName': categoryName});
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
+      DocumentReference response = await categoriesCollection.add({
+        'categoryName': categoryName,
+        'id': FirebaseAuth.instance.currentUser!.uid
+      });
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return HomeView();
       }));
     } catch (e) {

@@ -3,6 +3,7 @@ import 'package:e_commerce_app/helper/add_space.dart';
 import 'package:e_commerce_app/view/add_category_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -17,8 +18,11 @@ class _HomeViewState extends State<HomeView> {
   List<QueryDocumentSnapshot> categoriesDocsList = [];
   late bool isLoading;
   Future<void> getData() async {
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await FirebaseFirestore.instance.collection("categories").get();
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection("categories")
+        .where('id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
     categoriesDocsList.addAll(querySnapshot.docs);
   }
 
@@ -38,7 +42,8 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
             return AddCategoryView();
           }));
         },
