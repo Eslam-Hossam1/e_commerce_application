@@ -19,14 +19,11 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   Future<void> signInWithGoogle() async {
-    log('1');
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    log('2');
     if (googleUser == null) {
       return;
     }
-    log('3');
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
@@ -39,7 +36,6 @@ class _LoginViewState extends State<LoginView> {
 
     // Once signed in, return the UserCredential
     await FirebaseAuth.instance.signInWithCredential(credential);
-    log("4");
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return const HomeView();
     }));
@@ -98,7 +94,6 @@ class _LoginViewState extends State<LoginView> {
               ),
               SvgElevatedButton(
                 onPressed: () async {
-                  log('pressed');
                   await signInWithGoogle();
                 },
                 svgImagePath: "assets/icons8-google.svg",

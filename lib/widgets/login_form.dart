@@ -20,6 +20,7 @@ class _LoginFormState extends State<LoginForm> {
   late String password;
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -38,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               addHieghtSpace(8),
               CustomeTextFormField(
+                controller: emailController,
                 hintText: "Email",
                 onSaved: (value) {
                   email = value!;
@@ -61,9 +63,24 @@ class _LoginFormState extends State<LoginForm> {
               addHieghtSpace(12),
               Align(
                   alignment: Alignment.topRight,
-                  child: Text(
-                    "Forgot Password ?",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: InkWell(
+                    onTap: () async {
+                      if (emailController.text == '') {
+                        log('pls write your email then press forget password nigga');
+                        return;
+                      }
+                      try {
+                        await FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: emailController.text);
+                        log("go reset your password nigga");
+                      } catch (e) {
+                        log("your email doesn't exist nigga");
+                      }
+                    },
+                    child: Text(
+                      "Forgot Password ?",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   )),
               addHieghtSpace(12),
               CustomeElevatedButton(

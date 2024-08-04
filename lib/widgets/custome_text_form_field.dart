@@ -5,12 +5,15 @@ class CustomeTextFormField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.onSaved,
+    this.controller,
   });
   final String hintText;
   final void Function(String?)? onSaved;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       onSaved: onSaved,
       validator: (value) {
         if (value == '' || value == null) {
