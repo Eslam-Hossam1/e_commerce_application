@@ -1,0 +1,16 @@
+com.example.e_commerce_app-core-1.6.0-0 C:\Users\T.B\.gradle\caches\transforms-3\1227bb32d338e358eff4c5bf5b08270c\transformed\core-1.6.0\res
+com.example.e_commerce_app-jetified-window-1.0.0-beta04-1 C:\Users\T.B\.gradle\caches\transforms-3\1f063c91a907141588f51f373b1f5f4a\transformed\jetified-window-1.0.0-beta04\res
+com.example.e_commerce_app-jetified-window-java-1.0.0-beta04-2 C:\Users\T.B\.gradle\caches\transforms-3\6d2f8042b989e9f02a2914d91ea7c64c\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.e_commerce_app-jetified-annotation-experimental-1.1.0-3 C:\Users\T.B\.gradle\caches\transforms-3\a15c6353ebee292a754ca976f2ce177d\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.e_commerce_app-jetified-firebase-common-21.0.0-4 C:\Users\T.B\.gradle\caches\transforms-3\a1e9b7e171ebe989e7c2215846d4f6bc\transformed\jetified-firebase-common-21.0.0\res
+com.example.e_commerce_app-jetified-play-services-basement-18.3.0-5 C:\Users\T.B\.gradle\caches\transforms-3\e76aed36a087f5f71489bfa0e357771e\transformed\jetified-play-services-basement-18.3.0\res
+com.example.e_commerce_app-debug-6 D:\e_commerce_app\android\app\src\debug\res
+com.example.e_commerce_app-main-7 D:\e_commerce_app\android\app\src\main\res
+com.example.e_commerce_app-google-services-8 D:\e_commerce_app\android\build\app\generated\res\google-services\debug
+com.example.e_commerce_app-pngs-9 D:\e_commerce_app\android\build\app\generated\res\pngs\debug
+com.example.e_commerce_app-resValues-10 D:\e_commerce_app\android\build\app\generated\res\resValues\debug
+com.example.e_commerce_app-rs-11 D:\e_commerce_app\android\build\app\generated\res\rs\debug
+com.example.e_commerce_app-mergeDebugResources-12 D:\e_commerce_app\android\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.e_commerce_app-mergeDebugResources-13 D:\e_commerce_app\android\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.e_commerce_app-merged_res-14 D:\e_commerce_app\android\build\app\intermediates\merged_res\debug
+com.example.e_commerce_app-packaged_res-15 D:\e_commerce_app\android\build\firebase_core\intermediates\packaged_res\debug
