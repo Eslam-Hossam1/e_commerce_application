@@ -4,32 +4,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/widgets/custome_elevated_button.dart';
 import 'package:e_commerce_app/widgets/custome_text_form_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-class AddCategoryForm extends StatefulWidget {
-  const AddCategoryForm({super.key});
-
+class EditCategoryForm extends StatefulWidget {
+  const EditCategoryForm(
+      {super.key, required this.docId, required this.oldName});
+  final String docId;
+  final String oldName;
   @override
-  State<AddCategoryForm> createState() => _AddCategoryFormState();
+  State<EditCategoryForm> createState() => _EditCategoryFormState();
 }
 
-class _AddCategoryFormState extends State<AddCategoryForm> {
+class _EditCategoryFormState extends State<EditCategoryForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  TextEditingController oldNameController = TextEditingController();
   late String categoryName;
   bool isLoading = false;
   CollectionReference categoriesCollection =
       FirebaseFirestore.instance.collection("categories");
-  Future<void> addCategory(String categoryName) async {
+  Future<void> updeatCategory(String categoryName) async {
     try {
       setState(() {
         isLoading = true;
       });
-      DocumentReference response = await categoriesCollection.add({
-        'categoryName': categoryName,
-        'id': FirebaseAuth.instance.currentUser!.uid
-      });
+
+      await categoriesCollection
+          .doc(widget.docId)
+          .update({'categoryName': categoryName});
 
       if (mounted) {
         setState(() {
@@ -48,6 +51,12 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    oldNameController.text = widget.oldName;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
         key: formKey,
@@ -57,6 +66,7 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
           child: Column(
             children: [
               CustomeTextFormField(
+                controller: oldNameController,
                 hintText: "category Name",
                 onSaved: (value) {
                   categoryName = value!;
@@ -70,11 +80,11 @@ class _AddCategoryFormState extends State<AddCategoryForm> {
                         child: CircularProgressIndicator(),
                       )
                     : CustomeElevatedButton(
-                        text: "Add",
+                        text: "Update",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
-                            addCategory(categoryName);
+                            updeatCategory(categoryName);
                           } else {
                             setState(() {
                               autovalidateMode = AutovalidateMode.always;

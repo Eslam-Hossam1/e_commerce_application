@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/helper/add_space.dart';
 import 'package:e_commerce_app/view/add_category_view.dart';
+import 'package:e_commerce_app/view/edit_category_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -98,14 +99,30 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: Icon(Icons.cancel)),
+                                  addHieghtSpace(32),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-                                            Navigator.pop(context);
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return EditCategoryView(
+                                                docId: categoriesDocsList[index]
+                                                    .id,
+                                                oldName:
+                                                    categoriesDocsList[index]
+                                                        ['categoryName'],
+                                              );
+                                            }));
                                           },
-                                          child: Text("cancel")),
+                                          child: Text("update")),
                                       addWidthSpace(32),
                                       ElevatedButton(
                                           onPressed: () {
