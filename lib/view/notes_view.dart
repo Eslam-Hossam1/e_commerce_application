@@ -3,6 +3,7 @@ import 'package:e_commerce_app/helper/add_space.dart';
 import 'package:e_commerce_app/view/add_category_view.dart';
 import 'package:e_commerce_app/view/add_note_view.dart';
 import 'package:e_commerce_app/view/edit_category_view.dart';
+import 'package:e_commerce_app/view/edit_note.view.dart';
 import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -100,6 +101,15 @@ class _NotesViewState extends State<NotesView> {
                 itemCount: notesDocsList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return EditNoteView(
+                            categoryDocId: widget.categroyDocId,
+                            oldNoteText: notesDocsList[index]['noteText'],
+                            noteDocId: notesDocsList[index].id);
+                      }));
+                    },
                     // onTap: () {
                     //   showDialog(
                     //     context: context,
