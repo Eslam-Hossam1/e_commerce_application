@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:e_commerce_app/firebase_options.dart';
 import 'package:e_commerce_app/themes/my_theme.dart';
+import 'package:e_commerce_app/view/filter_view.dart';
 import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:e_commerce_app/view/signup_view.dart';
@@ -44,7 +45,7 @@ class _ECommerceAppState extends State<ECommerceApp> {
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
-          ? const HomeView()
+          ? const FilterView()
           : const LoginView(),
     );
   }
