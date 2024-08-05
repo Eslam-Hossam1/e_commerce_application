@@ -68,7 +68,7 @@ class _NotesViewState extends State<NotesView> {
           child: Icon(Icons.add),
         ),
         appBar: AppBar(
-          title: Text("hello my nigga"),
+          title: Text('Notes view '),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -110,70 +110,59 @@ class _NotesViewState extends State<NotesView> {
                             noteDocId: notesDocsList[index].id);
                       }));
                     },
-                    // onTap: () {
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (context) {
-                    //       return Center(
-                    //         child: Container(
-                    //             width: 300,
-                    //             height: 150,
-                    //             decoration: BoxDecoration(
-                    //               borderRadius: BorderRadius.circular(12),
-                    //               color: Colors.grey.shade900,
-                    //             ),
-                    //             child: Column(
-                    //               mainAxisAlignment: MainAxisAlignment.center,
-                    //               children: [
-                    //                 IconButton(
-                    //                     onPressed: () {
-                    //                       Navigator.pop(context);
-                    //                     },
-                    //                     icon: Icon(Icons.cancel)),
-                    //                 addHieghtSpace(32),
-                    //                 Row(
-                    //                   mainAxisAlignment: MainAxisAlignment.center,
-                    //                   children: [
-                    //                     ElevatedButton(
-                    //                         onPressed: () {
-                    //                           Navigator.pushReplacement(context,
-                    //                               MaterialPageRoute(
-                    //                                   builder: (context) {
-                    //                             return EditCategoryView(
-                    //                               docId: categoriesDocsList[index]
-                    //                                   .id,
-                    //                               oldName:
-                    //                                   categoriesDocsList[index]
-                    //                                       ['categoryName'],
-                    //                             );
-                    //                           }));
-                    //                         },
-                    //                         child: Text("update")),
-                    //                     addWidthSpace(32),
-                    //                     ElevatedButton(
-                    //                         onPressed: () {
-                    //                           FirebaseFirestore.instance
-                    //                               .collection("categories")
-                    //                               .doc(categoriesDocsList[index]
-                    //                                   .id)
-                    //                               .delete()
-                    //                               .then((e) {
-                    //                             Navigator.pushReplacement(context,
-                    //                                 MaterialPageRoute(
-                    //                                     builder: (context) {
-                    //                               return NotesView();
-                    //                             }));
-                    //                           });
-                    //                         },
-                    //                         child: Text("delete"))
-                    //                   ],
-                    //                 )
-                    //               ],
-                    //             )),
-                    //       );
-                    //     },
-                    //   );
-                    // },
+                    onLongPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Center(
+                            child: Container(
+                                width: 300,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.grey.shade900,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              FirebaseFirestore.instance
+                                                  .collection("categories")
+                                                  .doc(widget.categroyDocId)
+                                                  .collection('notes')
+                                                  .doc(notesDocsList[index].id)
+                                                  .delete()
+                                                  .then((e) {
+                                                Navigator.pushReplacement(
+                                                    context, MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return NotesView(
+                                                    categroyDocId:
+                                                        widget.categroyDocId,
+                                                  );
+                                                }));
+                                              });
+                                            },
+                                            child: Text("delete")),
+                                        addWidthSpace(32),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("cancel")),
+                                      ],
+                                    )
+                                  ],
+                                )),
+                          );
+                        },
+                      );
+                    },
                     child: Card(
                       elevation: 4,
                       color: Colors.white,
