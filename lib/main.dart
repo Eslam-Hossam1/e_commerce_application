@@ -46,7 +46,7 @@ class _ECommerceAppState extends State<ECommerceApp> {
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
-          ? const ImagePickerView()
+          ? const HomeView()
           : const LoginView(),
     );
   }

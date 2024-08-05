@@ -8,6 +8,7 @@ import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -131,6 +132,14 @@ class _NotesViewState extends State<NotesView> {
                                       children: [
                                         ElevatedButton(
                                             onPressed: () {
+                                              if (notesDocsList[index]['url'] !=
+                                                  'null') {
+                                                FirebaseStorage.instance
+                                                    .refFromURL(
+                                                        notesDocsList[index]
+                                                            ['url'])
+                                                    .delete();
+                                              }
                                               FirebaseFirestore.instance
                                                   .collection("categories")
                                                   .doc(widget.categroyDocId)
@@ -169,10 +178,11 @@ class _NotesViewState extends State<NotesView> {
                       child: Container(
                         child: Column(
                           children: [
-                            // Image.asset(
-                            //   "assets/my-image2.png",
-                            //   height: 150,
-                            // ),
+                            if (notesDocsList[index]["url"] != 'null')
+                              Image.network(
+                                notesDocsList[index]["url"],
+                                height: 150,
+                              ),
                             Text(
                               "${notesDocsList[index]["noteText"]}",
                               style: TextStyle(fontSize: 18),

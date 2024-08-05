@@ -19,23 +19,14 @@ class _ImagePickerViewState extends State<ImagePickerView> {
 
   Future<void> uploadimage() async {
     final ImagePicker picker = ImagePicker();
-// Pick an image.
-// final XFile? galleryImage = await picker.pickImage(source: ImageSource.gallery);
-// Capture a photo.
-
     final XFile? cameraImage =
         await picker.pickImage(source: ImageSource.camera);
-    log('1');
     if (cameraImage != null) {
       var imageName = basename(cameraImage.path);
       file = File(cameraImage.path);
-      log('2');
       var storageRef = FirebaseStorage.instance.ref(imageName);
-      log('3');
       await storageRef.putFile(file!);
-      log('4');
       url = await storageRef.getDownloadURL();
-      log(url ?? '5');
     }
     setState(() {});
   }
