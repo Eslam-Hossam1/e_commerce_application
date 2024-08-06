@@ -39,7 +39,7 @@ class _TestViewState extends State<TestView> {
                 height: 200,
                 child: Center(
                     child: Text(
-                  message.notification!.body!,
+                  message.data.toString(),
                 )),
               )),
             );
@@ -85,7 +85,7 @@ class _TestViewState extends State<TestView> {
           "title": "Breaking News",
           "body": "New news story available."
         },
-        "data": {"story_id": "story_12345"}
+        "data": {"story_id": "story_12345", "name": "El zalton"}
       }
     };
 
