@@ -1,12 +1,14 @@
 import 'dart:developer';
 
 import 'package:e_commerce_app/firebase_options.dart';
+import 'package:e_commerce_app/messaging_permission_handler.dart';
 import 'package:e_commerce_app/themes/my_theme.dart';
 import 'package:e_commerce_app/view/filter_view.dart';
 import 'package:e_commerce_app/view/home_view.dart';
 import 'package:e_commerce_app/view/image_picker_view.dart';
 import 'package:e_commerce_app/view/login_view.dart';
 import 'package:e_commerce_app/view/signup_view.dart';
+import 'package:e_commerce_app/view/test_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await myRequestPermission();
   runApp(const ECommerceApp());
 }
 
@@ -46,7 +49,7 @@ class _ECommerceAppState extends State<ECommerceApp> {
       debugShowCheckedModeBanner: false,
       home: (FirebaseAuth.instance.currentUser != null &&
               FirebaseAuth.instance.currentUser!.emailVerified)
-          ? const HomeView()
+          ? const TestView()
           : const LoginView(),
     );
   }
