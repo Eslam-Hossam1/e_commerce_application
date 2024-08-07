@@ -60,13 +60,19 @@ class _TestViewState extends State<TestView> {
   }
 
   getInit() async {
+    log("initial msg");
+
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
+    log("initial msg");
+
     if (initialMessage != null) {
       log("initial msg");
       if (initialMessage.data['type'] == 'chat') {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatView(text: initialMessage.notification?.body);
+          return ChatView(
+            text: initialMessage.data['type'],
+          );
         }));
       }
     }
