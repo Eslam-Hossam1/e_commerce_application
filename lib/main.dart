@@ -56,10 +56,11 @@ class _ECommerceAppState extends State<ECommerceApp> {
     return MaterialApp(
       theme: MyTheme.customeTheme,
       debugShowCheckedModeBanner: false,
-      home: (FirebaseAuth.instance.currentUser != null &&
-              FirebaseAuth.instance.currentUser!.emailVerified)
-          ? const TestView()
-          : const LoginView(),
+      // home: (FirebaseAuth.instance.currentUser != null &&
+      //         FirebaseAuth.instance.currentUser!.emailVerified)
+      //     ? const TestView()
+      //     : const LoginView(),
+      home: const TestView(),
     );
   }
 }

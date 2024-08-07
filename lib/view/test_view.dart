@@ -59,8 +59,22 @@ class _TestViewState extends State<TestView> {
     }
   }
 
+  getInit() async {
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      log("initial msg");
+      if (initialMessage.data['type'] == 'chat') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ChatView(text: initialMessage.notification?.body);
+        }));
+      }
+    }
+  }
+
   @override
   void initState() {
+    getInit();
     getAccessToken();
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) {
@@ -121,7 +135,7 @@ class _TestViewState extends State<TestView> {
       'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
       'Content-Type': 'application/json',
       'Authorization':
-          'Bearer ya29.c.c0ASRK0GbRhn6BrXnw273PDv88n4m_R6-DQB8v1gpTMMNb57BSdffARwuXL1CzOWhU54-SL6dxBqV11UJdJ0yQgeqK1BafOmJCE7M7djJuEFkRxrts1XHAJTBJjlzPVve_onj7uem1rZFrLoITpA-kVM_2TpQEhbUWO9ixNglisnf0AqyDM3_4b8iteSpInjw_utiq78grE-Zlwx_0AtS0UpN3aJdjYbQ-N8DSjGjqILaMo50yx0TFMhPS3PYd7z0ZIdclA6CrXe_9zsX99G9JCVMcCgO_uViGqUiUkhbH9uy9NVvsb43xEIshVt7BlcYeWo1y3-R4gsUKwQLu0Z6BDIShSnn-cCoABmaQwpneJmcKHq0_hJSeV3LGN385Atn3IWZu6gOUksWc23xe2lY1W4dr4wk1by8rZ9FnSvj_a-6kbsXBjscxt7pp184I7udtuVxX06ShSY0d_0tgn59cJu_uMvj4B9ib-aiIW4hve_1cJZFyn_Xp8OM0jflVWwfsUUUsqmkBpi2o6yZBjyvSuQRReqxcIktusvvob8uQmw8SpuiUpi050S2gOmpVR0Q84XwVV1vFO7l_9F71yoX_iXtF_fbFlW8Vcq-fOWenp3RJoMRJZnBnq03B4OfMS0vFjR_R9w50w810ds_wQez5Y3t_c-nZqkXhopaopF8M3yuuQOwFwtMxujU2XUulh0BYaaUrwM4c7a41tWd5ZFdq7aptsyw602g3O45ZMQUwYWbrzU_9uhY-e6d40djIx5Me6kIt0YaIxvbrm1Ss3dud7tosOsSaxh-p6kkJIy6YI_7qoipJ1XcB990J-eYz2Uccl8nFVbv6Yt4_1lxsFMMJWpmihMOluWhmtwfoy-lSB0XS4B3k_q-3nY5WtUOis-1XyjeeSlU5hQhZngc5dMXrwh0cUWlMqUxF5516Sk3cUwq--QBaJs-_0jlcmztozg7BOjjU0XmOIZqefJF5MIuzcInqJ4rim1mB7h0JVhF6'
+          'Bearer ya29.c.c0ASRK0GZe0rWJG4V4XsMFmFam7aFfctkKCvcwffCn2QhEarNG8D5HLWYb7Pfd4JFU24TcNYMOyO31Sgt3pEoauujQ4CQXGIIlFDsSPPVI3Q-19nExV_Z0gjmEWhpxIc9m5A_fcnUqGtCWDXyVqgvMDAE3585_2yNLm9KhG_tgxNP7dnJxV0TrmuubS3eMxKLJEnsLsTUkB6JLdrSdWOEu94BVH-67aNypC9hH2BrKyNcV1PMvAOKPIDRBY78G12wCi7Z0C0YPNIIdfA7Vl-TbgsVP5Km98MZjIr9upjSBezmGatZyeNy_6wFDhUL1rZb8Ai2HX9OvC-BzDdzAY5iOy9GSnizSs18_E0zdogsE5tkObRfV27kvj7yjN385PFunp2MoVUuxqi6UmSwBSM3y0w1i9O05uj9ptVpfS2k1x1Ysbh-Fg3cdMQnk7-O_em3VwmfvX5sedF5JIVi33qrlsc7WgwslQfbuXyO_zUgIee6tiQU6hXYMBYyXl9drcwn-i50Fdofv5Bi4s9k7oRZVzBywezl_gJ78IV4cSB8ebavVn35pyyoMYwesjqfR7xpvo-Iikpx7hmpi052F87ZB7qpRQjJ-uWdm1Qjecp8bR8gOkV6Mvy2Zhwpu26tu4rrv6ut2dcXXw45qdh4Vz_2MIy6ZcnRIzu24jxbrSB-26dliS9ZXZuwcjOmWoWFFSwBM179b111oSp7ncSFbyBUfb9me3uuaFWc0YmtImvJqYsd4R_oy94s_lnq2kflscxyB3_tOuQ6mV-mIemmnUlnsRQ7dmFjBJJ3uUkojdcZZhz-s_7FI1Op_Jun-32hgVvUxiYJW5vvfo7Zaa4ommoM5t2xUk_hfUjZWxngoZsRcfbafUZ81Zr9SsnnVhnhOWFqhXnm5viouvm0shje8776Xrz_8r1wycVsp-_-xtBIjwwO2jihO7fF8F5Rx_kMlMx0zzp6i7s1IlUsJ49vOWVaJOJ9Qz0r0f3yBhpf_4JJk'
     };
     var url = Uri.parse(
         'https://fcm.googleapis.com/v1/projects/e-commerce-app-2af68/messages:send');
@@ -129,7 +143,7 @@ class _TestViewState extends State<TestView> {
     var body = {
       "message": {
         "token":
-            "cpCDIc7vQOOl9xYPGWpTn0:APA91bG-gxKGfgHLiCXMP9JybAq_tXWqs4JYknxlQCsbK-DnEb-cSl1fuFzJF_w9W6iCQuHJ7l615AaxzhWg-aGKc_M1ZlzJdVZUQncI-SOk6xHpXknHEYo8pI9QJoMSO6CZFDYIPe6s",
+            "eSu9RFNhS_GUNvDwYPkJYd:APA91bFa1_vjn2hpQHQTpJ5a_TNVBnUyWpFHcO_buJJy9IxSZ1TZz9cmNfKS8JNft3FAvmSAG5pEuLvCs1jW2w0pN0zTpPPglXBSVgGwl0fJUYQFAKX-iuh6XtNTsqWQcYeZHWkhT8fs",
         "notification": {
           "title": "Breaking News",
           "body": "New news story available."
